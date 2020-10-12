@@ -1,10 +1,10 @@
 <template>
   <header class="header">
-    <div class="flex-wrap">
+    <div class="row-wrapper">
       <span class="slide-in">
         <nuxt-link :to="localePath('index')">
-          <h1 class="logo hide-on-small-screen">Hoppscotch</h1>
-          <h1 class="logo show-on-small-screen">Hs</h1>
+          <h1 class="text-xl hide-on-small-screen hover:text-acColor">Hoppscotch</h1>
+          <h1 class="text-xl show-on-small-screen hover:text-acColor">Hs</h1>
         </nuxt-link>
       </span>
       <span>
@@ -51,7 +51,7 @@
             <img
               v-if="fb.currentUser.photoURL"
               :src="fb.currentUser.photoURL"
-              class="material-icons"
+              class="rounded-full material-icons"
               alt="Profile image"
             />
             <i v-else class="material-icons">account_circle</i>
@@ -119,7 +119,7 @@
       <div slot="header">
         <ul>
           <li>
-            <div class="flex-wrap">
+            <div class="row-wrapper">
               <h3 class="title">{{ $t("extensions") }}</h3>
               <div>
                 <button class="icon" @click="showExtensions = false">
@@ -179,7 +179,7 @@
       <div slot="header">
         <ul>
           <li>
-            <div class="flex-wrap">
+            <div class="row-wrapper">
               <h3 class="title">{{ $t("shortcuts") }}</h3>
               <div>
                 <button class="icon" @click="showShortcuts = false">
@@ -214,11 +214,11 @@
         </div>
         <hr />
         <div>
-          <kbd>Alt</kbd>+<kbd>🠋</kbd>
+          <kbd>Alt</kbd>+<kbd>▲</kbd>
           <label>{{ $t("select_next_method") }}</label>
         </div>
         <div>
-          <kbd>Alt</kbd>+<kbd>🠉</kbd>
+          <kbd>Alt</kbd>+<kbd>▼</kbd>
           <label>{{ $t("select_previous_method") }}</label>
         </div>
         <hr />
@@ -249,7 +249,7 @@
       <div slot="header">
         <ul>
           <li>
-            <div class="flex-wrap">
+            <div class="row-wrapper">
               <h3 class="title">{{ $t("support_us") }}</h3>
               <div>
                 <button class="icon" @click="showSupport = false">
@@ -271,51 +271,47 @@
 <style scoped lang="scss">
 $responsiveWidth: 768px;
 
+kbd {
+  @apply inline-flex;
+  @apply resize-none;
+}
+
 @keyframes slideIn {
   0% {
-    opacity: 0;
-    left: -16px;
+    @apply opacity-0;
+    @apply -left-4;
   }
 
   100% {
-    opacity: 1;
-    left: 0px;
+    @apply opacity-100;
+    @apply left-0;
   }
 }
 
 .slide-in {
-  position: relative;
+  @apply relative;
   animation: slideIn 0.2s forwards ease-in-out;
 }
 
-.logo {
-  font-size: 22px;
-
-  &:hover {
-    color: var(--ac-color);
-  }
-}
-
 .show-on-small-screen {
-  display: none;
+  @apply hidden;
 }
 
 @media (max-width: $responsiveWidth) {
   .show-on-small-screen {
-    display: inline-flex;
+    @apply inline-flex;
   }
 }
 </style>
 
 <script>
-import intializePwa from "~/assets/js/pwa"
+import intializePwa from "~/helpers/pwa"
 import {
   hasExtensionInstalled,
   hasChromeExtensionInstalled,
   hasFirefoxExtensionInstalled,
 } from "~/helpers/strategies/ExtensionStrategy"
 import { getPlatformSpecialKey } from "~/helpers/platformutils"
-import firebase from "firebase/app"
 import { fb } from "~/helpers/fb"
 import closeIcon from "~/static/icons/close-24px.svg?inline"
 
